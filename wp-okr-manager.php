@@ -40,6 +40,8 @@ class WP_OKR_MANAGER {
 		$this->load();
 
 		add_action('init', array($this, 'init'));
+		add_action('admin_menu', array($this, 'pages'));
+		add_action('admin_post_okrm_new_kpi_form_response', array($this,'add_kpi_form_submission'));
 	}
 
 	// Adds the option that gives the news
@@ -60,6 +62,38 @@ class WP_OKR_MANAGER {
 		Okmr_OKR::init();
 		Okmr_KPI::init();
 	}
+
+	// Adds the pages in the admin dashboard
+	public function pages(){
+	    add_menu_page('Add new KPI','Add KPI','manage_options','add-kpi',array($this,'add_kpi_callback'));
+    }
+
+    public function add_kpi_callback(){
+        $okmr_add_meta_nonce = wp_create_nonce( 'okmr_add_user_meta_form_nonce' );
+        include_once OKMR_ADMIN_VIEWS . '/add_new_kpi_admin.php';
+    }
+
+    /**
+     * NOTE: It seems like this is the easiest way to relate the OKRs and the KPIS
+     *
+     * TODO: Figure out a way to retrieve the KPIs based on the 'parent_okr' value
+     */
+    public function add_kpi_form_submission(){
+        if( isset( $_POST['okmr_add_user_meta_nonce'] ) && wp_verify_nonce( $_POST['okmr_add_user_meta_nonce'], 'okmr_add_user_meta_form_nonce') ) {
+            echo wp_insert_post(
+                array(
+                    'post_content' => $_POST['okmr_name'],
+                    'post_title' => $_POST['okmr_name'],
+                    'post_type' => 'okmr_kpi',
+                    'meta_input' => array(
+                        'parent_okr' => '3200'
+                    )
+                ),
+            );
+        }else{
+            die("Something didn't go right right");
+        }
+    }
 }
 
 new WP_OKR_MANAGER();
