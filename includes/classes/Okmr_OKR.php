@@ -23,4 +23,15 @@ class Okmr_OKR {
 			)
 		);
 	}
+
+	static function kpi_meta_box(){
+	    add_meta_box(
+	        'kpis',
+            __('KPIs', OKMR_TEXTDOMAIN),
+            array('Okmr_OKR', 'kpi_meta_box_callable'));
+    }
+
+    public function kpi_meta_box_callable(){
+	    // Do something
+    }
 }
