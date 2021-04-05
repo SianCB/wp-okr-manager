@@ -1,0 +1,19 @@
+.okmr-kpi-element li{
+    display:inline;
+}
+
+.okmr-kpi-element .okrm-action-btns{
+    float:right;
+}
+
+.okmr-clear-fix{
+    float:none;
+}
+
+.okmr-edit-btn{
+    color:orange;
+}
+
+.okmr-delete-btn{
+    color:red;
+}
