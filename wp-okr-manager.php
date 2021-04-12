@@ -47,7 +47,8 @@ class WP_OKR_MANAGER {
 		add_action('add_meta_boxes', array('Okmr_OKR', 'kpi_meta_box'));
 		add_action('admin_menu', array($this, 'pages'));
 		add_action('admin_post_okrm_new_kpi_form_response', array($this,'add_kpi_form_submission'));
-		add_action('admin_enqueue_scripts', array($this, 'enqeue'));
+		add_action('admin_enqueue_scripts', array($this, 'enqueue'));
+		add_filter('script_loader_tag', array($this, 'addModuleType') , 10, 3);
 	}
 
 	// Adds the option that gives the news
@@ -63,8 +64,20 @@ class WP_OKR_MANAGER {
 		require_once( OKMR_MODEL_PATH . '/Okmr_KPI.php' );
 	}
 
-	public function enqeue () {
-		wp_enqueue_script('okmr-main-script', OKMR_JS_PATH . '/OKMR_editForm.js');
+	public function addModuleType ($tag, $handle, $src) {
+
+		if ( 'okmr-main-script' != $handle ) {
+			return $tag;
+		}
+		
+		$tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
+		return $tag;
+	}
+
+	public function enqueue () {
+		wp_enqueue_script('okmr-kpi-form', OKMR_JS_PATH . '/OKMR_kpiForm.js', array(), null, false);
+		wp_enqueue_script('okmr-edit-form', OKMR_JS_PATH . '/OKMR_editForm.js', array(), null, false);
+		wp_enqueue_script('okmr-new-form', OKMR_JS_PATH . '/OKMR_newKpiForm.js', array(), null, false);
 		wp_enqueue_style('okmr-main-stylesheet', OKMR_CSS_PATH . '/style.css');
 	}
 

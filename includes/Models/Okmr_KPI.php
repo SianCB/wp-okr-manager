@@ -18,7 +18,7 @@ class Okmr_KPI{
 				'public'      => false,
 				'has_archive' => true,
 				'publicly_queryable' => true,
-				'show_ui' => true,
+				'show_ui' => false,
 			)
 		);
 	}

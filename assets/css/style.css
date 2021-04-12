@@ -17,3 +17,16 @@
 .okmr-delete-btn{
     color:red;
 }
+
+.okmr-hide{
+    display:none;
+}
+
+#okmr-add-new-kpi{
+    color:#000;
+    outline: none;
+}
+
+#okmr-add-new-wrap{
+    margin-top: 20px;
+}

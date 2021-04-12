@@ -39,7 +39,7 @@ class Okmr_OKR {
 			'meta_value_num' => get_the_ID(),
 		);
 		$kpis = new WP_Query($args);?>
-		    <ul class="okmr-list-kpis">
+		    <ul id="okmr-list-kpis">
 			    <?php if ($kpis->have_posts()): while ($kpis->have_posts()): $kpis->the_post();?>
 	                <li id="okmr-kpi-wrap-<?php the_ID(); ?>">
                         <ul id="element-<?php the_ID(); ?>" class="okmr-kpi-element">
@@ -55,6 +55,8 @@ class Okmr_OKR {
                     <div class="okmr-clearfix"></div>
 			    <?php endwhile;?>
 		    </ul>
+			<a href="#" id="okmr-add-new-kpi" onclick="new OKMR_newKpiForm()"><span class="dashicons dashicons-plus-alt"></span></a>
+            <div id="okmr-add-new-wrap"></div>
 	    <?php
 	    endif;
     }
