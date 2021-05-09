@@ -102,7 +102,7 @@ class WP_OKR_MANAGER {
      */
     public function add_kpi_form_submission(){
         if( isset( $_POST['okmr_add_user_meta_nonce'] ) && wp_verify_nonce( $_POST['okmr_add_user_meta_nonce'], 'okmr_add_user_meta_form_nonce') ) {
-            echo wp_insert_post(
+            wp_insert_post(
                 array(
                     'post_content' => $_POST['okmr_name'],
                     'post_title' => $_POST['okmr_name'],

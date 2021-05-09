@@ -17,6 +17,6 @@ class OKMR_editForm{
 
     createEditForm() {
         const wrap = document.getElementById('okmr-kpi-wrap-'+this.id);
-        new OKMR_kpiForm('edit', this.elementID, wrap);
+        new OKMR_kpiForm('edit', this.id, wrap);
     }
 }

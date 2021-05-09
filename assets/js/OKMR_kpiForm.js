@@ -5,6 +5,9 @@ class OKMR_kpiForm{
         if (id != null || element != null){
             this.id = id;
             this.element = element;
+            this.secondID = id;
+            this.kpiElement = document.querySelector('#element-' + this.id + ' .okmr-element');
+            this.kpiValue = this.kpiElement.innerText;
         }
 
         this.validateFormType();
@@ -25,6 +28,7 @@ class OKMR_kpiForm{
         this.form = document.createElement('form');
         this.field = document.createElement('input');
         this.submit = document.createElement('input');
+        this.close = document.createElement('input');
     }
 
     operateElements(){
@@ -33,6 +37,7 @@ class OKMR_kpiForm{
         this.assignFieldValue();
         this.assignSubmitProperties();
         this.appendInnerElements();
+        this.configureCloser();
     }
 
     assignFormID (){
@@ -54,19 +59,39 @@ class OKMR_kpiForm{
     }
 
     assignFieldValue(){
-        if(this.type == 'edit' && this.element != null){
-            this.field.value = this.element.innerText.trim();
+        if(this.type == 'edit'){
+            this.field.value = this.kpiValue.trim();
         }
     }
 
     appendInnerElements(){
         this.form.appendChild(this.field);
         this.form.appendChild(this.submit);
+        this.form.appendChild(this.close);
+    }
+
+    configureCloser(){
+        this.close.innerText = 'X';
+        this.close.classList.add('okmr-closer');
+        this.close.id = 'closer-' + this.secondID;
+        this.close.type = 'button';
+        this.close.value = 'Discard'
+        this.close.onclick = () =>{
+            this.form.remove();
+
+            if (this.type === 'edit'){
+                document.getElementById('element-' + this.id).classList.remove('okmr-hide');
+            }
+        }
     }
 
     appendToWrap(){
         if (this.element != null){
             this.element.append(this.form);
         }
+    }
+
+    closeForm(){
+        this.form.remove();
     }
 }
